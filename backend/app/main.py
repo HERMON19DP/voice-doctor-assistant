@@ -1,6 +1,8 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.database import Base, engine
+from app import models
 
 app = FastAPI(
     title="Voice AI Doctor Appointment Assistant",
@@ -31,3 +33,7 @@ async def health_check():
         "status": "healthy",
         "service": "backend",
     }
+
+@app.on_event("startup")
+def create_tables():
+    Base.metadata.create_all(bind=engine)
