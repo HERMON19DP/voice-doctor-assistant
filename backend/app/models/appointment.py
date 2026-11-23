@@ -26,7 +26,7 @@ class Appointment(Base):
     created_at = Column(DateTime, server_default=func.now(), nullable=False)
 
     doctor = relationship("Doctor", back_populates="appointments")
-    slot = relationship("Slot", back_populates="appointment")
+    slot = relationship("Slot", back_populates="appointments")
 
     __table_args__ = (
         Index(
