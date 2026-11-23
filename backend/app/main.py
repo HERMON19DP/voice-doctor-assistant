@@ -3,12 +3,16 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import Base, engine
 from app import models
+from app.api.doctors import router as doctors_router
+
 
 app = FastAPI(
     title="Voice AI Doctor Appointment Assistant",
     description="Backend API for the AI-powered doctor appointment assistant.",
     version="1.0.0",
 )
+
+app.include_router(doctors_router)
 
 app.add_middleware(
     CORSMiddleware,

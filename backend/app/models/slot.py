@@ -15,7 +15,7 @@ class Slot(Base):
     is_available = Column(Boolean, default=True, nullable=False)
 
     doctor = relationship("Doctor", back_populates="slots")
-    appointment = relationship("Appointment", back_populates="slot", uselist=False)
+    appointments = relationship("Appointment", back_populates="slot")
 
     __table_args__ = (
         UniqueConstraint("doctor_id", "start_time", name="uq_doctor_slot_start"),
