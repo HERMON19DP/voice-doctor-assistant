@@ -23,3 +23,11 @@ class AppointmentResponse(BaseModel):
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class AppointmentCancel(BaseModel):
+    phone_number: str = Field(
+        min_length=7,
+        max_length=20,
+        pattern=r"^\+?[0-9][0-9\s-]{5,18}[0-9]$",
+    )

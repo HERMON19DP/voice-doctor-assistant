@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.database import Base, engine
 from app import models
 from app.api.doctors import router as doctors_router
-
+from app.api.appointments import router as appointments_router
 
 app = FastAPI(
     title="Voice AI Doctor Appointment Assistant",
@@ -13,6 +13,8 @@ app = FastAPI(
 )
 
 app.include_router(doctors_router)
+app.include_router(doctors_router)
+app.include_router(appointments_router)
 
 app.add_middleware(
     CORSMiddleware,
