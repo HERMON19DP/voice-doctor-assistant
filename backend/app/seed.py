@@ -1,9 +1,7 @@
-
 from datetime import date, datetime, time, timedelta
 
 from app.database import Base, SessionLocal, engine
 from app.models import Doctor, Slot
-
 
 DOCTORS = [
     {
@@ -56,9 +54,7 @@ def seed_database():
                         time(hour=hour),
                     )
 
-                    end_time = start_time + timedelta(
-                        minutes=SLOT_DURATION_MINUTES
-                    )
+                    end_time = start_time + timedelta(minutes=SLOT_DURATION_MINUTES)
 
                     slots.append(
                         Slot(

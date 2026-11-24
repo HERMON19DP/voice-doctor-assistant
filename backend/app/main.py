@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import Base, engine
@@ -12,7 +11,6 @@ app = FastAPI(
     version="1.0.0",
 )
 
-app.include_router(doctors_router)
 app.include_router(doctors_router)
 app.include_router(appointments_router)
 
@@ -39,6 +37,7 @@ async def health_check():
         "status": "healthy",
         "service": "backend",
     }
+
 
 @app.on_event("startup")
 def create_tables():

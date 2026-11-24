@@ -1,4 +1,3 @@
-
 from sqlalchemy.orm import Session
 
 from app.models import Doctor, Slot
@@ -6,10 +5,7 @@ from app.models import Doctor, Slot
 
 def get_all_doctors(db: Session):
     return (
-        db.query(Doctor)
-        .filter(Doctor.is_active.is_(True))
-        .order_by(Doctor.name)
-        .all()
+        db.query(Doctor).filter(Doctor.is_active.is_(True)).order_by(Doctor.name).all()
     )
 
 

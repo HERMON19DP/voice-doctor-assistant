@@ -1,4 +1,3 @@
-
 from datetime import datetime
 
 from sqlalchemy import update
@@ -40,9 +39,7 @@ def book_appointment(
         )
 
         if result.rowcount != 1:
-            raise ValueError(
-                "Slot is unavailable, invalid, or already booked"
-            )
+            raise ValueError("Slot is unavailable, invalid, or already booked")
 
         appointment = Appointment(
             doctor_id=doctor_id,
@@ -66,9 +63,7 @@ def get_appointments(db: Session, phone_number: str | None = None):
     query = db.query(Appointment)
 
     if phone_number:
-        query = query.filter(
-            Appointment.phone_number == phone_number
-        )
+        query = query.filter(Appointment.phone_number == phone_number)
 
     return query.order_by(Appointment.created_at.desc()).all()
 
@@ -91,11 +86,13 @@ def cancel_appointment(
 
         if not appointment:
             raise LookupError(
-    "Appointment not found, already cancelled, "
-    "or phone number does not match"
-)
+                "Appointment not found, already cancelled, "
+                "or phone number does not match"
+            )
         appointment.status = "cancelled"
-        appointment.slot.is_available = True
+        # Only reopen a slot if its appointment time is still in the future.
+        if appointment.slot.start_time > datetime.now():
+            appointment.slot.is_available = True
 
         db.commit()
         db.refresh(appointment)
